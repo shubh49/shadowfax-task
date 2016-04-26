@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+    <title>ESPGAME | shadowfax task</title>
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron">
+        <h1>Welcome To ESPGAME</h1>
+    </div>
+<div class="row">
+    <div class="col-sm-6">
+        <h2>Rules</h2>
+        <p>You need atleast two players paired to play this game at a time.</p>
+        <p>During the game play each paired player is shown the same question.</p>
+        <p>Each question would have a primary image and a set of secondary images to match to the primary image.</p>
+        <p>Both paired players can move to the next question only when they choose the same set of secondary images.</p>
+    </div>
+    <div class="col-sm-6 text-center">
+      <br>
+      <br>
+      <br>
+      <br>
+      <button id="play" class="btn btn-info btn-lg">Let's Play</button>
+    </div>
+</div>
+</div>
+
+<footer class="row">
+    <p>Designed by - Shubham Aggarwal</p>
+</footer>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+    var socket = io();
+    $('#play').click(function(){
+        document.location.href = 'stage1';
+    });
+</script>
+</body>
+</html>

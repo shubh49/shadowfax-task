@@ -1,0 +1,30 @@
+{
+  "name": "espgame",
+  "version": "1.0.0",
+  "description": "Internship task for Shadowfax",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shubh49/shadowfax-task.git"
+  },
+  "keywords": [
+    "espgame",
+    "shadowfax",
+    "task",
+    "internship",
+    "socket.io"
+  ],
+  "author": "Shubham Aggarwal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shubh49/shadowfax-task/issues"
+  },
+  "homepage": "https://github.com/shubh49/shadowfax-task#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "socket.io": "^1.3.5"
+  }
+}

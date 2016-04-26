@@ -1,0 +1,49 @@
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+}
+
+@font-face {
+    font-family: xscale;
+    src: url(fonts/X-SCALE_.TTF);
+}
+@font-face {
+    font-family: xcelsion;
+    src: url(fonts/xcelv3.ttf);
+}
+@font-face {
+    font-family: service;
+    src: url(fonts/7thservicehalf.ttf);
+}
+.sub-heading{
+    font-family: xscale;
+    color: black;
+    text-align: center;
+}
+
+.jumbotron {
+    background-color: #ff6600;
+    text-align: center;
+}
+
+.jumbotron h1 {
+    font-family: service;
+    color: white;
+}
+
+.col-sm-6 h2, h4{
+    font-family: xscale;
+}
+
+.row {
+    text-align: center;
+}
+
+footer {
+    width: 100%;
+    margin-top: 70px;
+    position: absolute;
+}

@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Socket.IO chat</title>
+        <style>
+            * { margin: 0; padding :0; box-sizing: border-box; }
+            body { font: 13px Helvetica, Arial; }
+            #messages { list-style-type :none; margin: 0; padding: 0; }
+            #messages li { padding: 5px 10px; }
+            #messages li:nth-child(odd) { background: #eee; }
+        </style>
+        <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
+    </head>
+    <body>
+      <div class="container">
+        <div class="text-center">
+            <h1>Welcome!</h1>
+        </div>
+        <div class="col-sm-12 text-center">
+          <img id="main" src="" class="img-rounded" width="200" height="120">
+          <p>Main Image</p>
+        </div>
+        <div class="row text-center">
+          <div class="col-sm-6">
+            <img id="sec1" src="" class="img-rounded" width="200" height="120">
+            <p>Choice - 1
+              <input type="radio" id="1" name="radiobutton">
+            </p>
+          </div>
+          <div class="col-sm-6">
+            <img id="sec2" src="" class="img-rounded" width="200" height="120">
+            <p>Choice - 2
+              <input type="radio" id="2" name="radiobutton">
+            </p>
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="col-sm-6">
+            <img id="sec3" src="" class="img-rounded" width="200" height="120">
+            <p>Choice - 3
+              <input type="radio" id="3" name="radiobutton">
+            </p>
+          </div>
+          <div class="col-sm-6">
+            <img id="sec4" src="" class="img-rounded" width="200" height="120">
+            <p>Choice - 4
+              <input type="radio" id="4" name="radiobutton">
+            </p>
+          </div>
+        </div>
+        <div class="row text-center">
+            <br>
+            <button id="submit" class="btn btn-success">Submit Answer</button>
+        </div>
+      </div>
+        <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <script>
+        var room = window.location.href.split('/').pop();
+        $(document).ready(function() {
+            $('#main').attr("src", "static/images/" + room + '/main.jpg');
+            $('#sec1').attr("src", "static/images/" + room + '/sec1.jpg');
+            $('#sec2').attr("src", "static/images/" + room + '/sec2.jpg');
+            $('#sec3').attr("src", "static/images/" + room + '/sec3.jpg');
+            $('#sec4').attr("src", "static/images/" + room + '/sec4.jpg');
+        });
+            var socket = io();
+
+            var getValue = function() {
+                var allInputsFields = document.getElementsByTagName('input')
+                for (var i = 0; i < allInputsFields.length; i++) {
+                    if(allInputsFields[i].checked) {
+                        return i+1;
+                    }
+                }
+            }
+
+            $('#submit').click(function(){
+                var choiceNo = getValue();
+                // console.log(choiceNo);
+                socket.emit('choice', choiceNo);
+            });
+
+            if (room == 'stage1') {
+                socket.emit('create', room);
+            }
+
+            socket.on('room_created', function(msg) {
+                alert(msg);
+            });
+
+            socket.on('registered', function(msg) {
+                alert(msg);
+            });
+
+            socket.on('mismatch', function(msg) {
+                alert(msg);
+            });
+
+            socket.on('match', function(msg) {
+                alert(msg);
+                console.log(room[room.length-1]);
+                var val = parseInt(room[room.length-1], 10);
+                room = room.slice(0,-1);
+                val = val + 1;
+                room = room + val;
+                socket.emit('nextStage', room);
+                document.location.href = room;
+            });
+
+            socket.on('getNextStage', function(room) {
+                $('#main').attr("src", "static/images/" + room + '/main.jpg');
+                $('#sec1').attr("src", "static/images/" + room + '/sec1.jpg');
+                $('#sec2').attr("src", "static/images/" + room + '/sec2.jpg');
+                $('#sec3').attr("src", "static/images/" + room + '/sec3.jpg');
+                $('#sec4').attr("src", "static/images/" + room + '/sec4.jpg');
+                console.log(room);
+            });
+
+            socket.on('got_pair', function(msg) {
+                alert(msg);
+            });
+
+            socket.on('limit_reached', function(msg) {
+                alert(msg);
+                document.location.href = '/';
+            });
+
+            socket.on('disconnet', function(msg) {
+                alert(msg);
+                document.location.href = '/';
+            });
+
+            socket.on('join', function(room) {
+                console.log(room);
+                alert('Oh! You have got a pair. Enjoy Your game.')
+            });
+        </script>
+    </body>
+</html>
