@@ -17,6 +17,8 @@ https://afternoon-springs-44315.herokuapp.com/
 ## NOTE
 
 - **Some of the features are not working properly on heroku beacuse of SSL certificate. So it is advised to run locally.**
+Need to disable secure feature for the app to work.
+
 - **Cascading**    - lower camel case
 - **Identitation** - whitespaces
 
