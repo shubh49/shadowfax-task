@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>Socket.IO chat</title>
+        <title>ESPGAME | shadowfax-task</title>
         <script src="static/jquery-1.11.1.js"></script>
         <script src="static/socket.io-1.2.0.js"></script>
         <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
@@ -68,12 +68,17 @@
                         return i+1;
                     }
                 }
+                return -1;
             }
 
             $('#submit').click(function(){
                 var choiceNo = getValue();
-                // console.log(choiceNo);
-                socket.emit('choice', choiceNo);
+                if(choiceNo == -1) {
+                    alert('Select atleast one option.');
+                }
+                else {
+                    socket.emit('choice', choiceNo);
+                }
             });
 
             if (room == 'stage1') {
@@ -125,10 +130,10 @@
                 document.location.href = '/';
             });
 
-            socket.on('disconnet', function(msg) {
-                alert(msg);
-                document.location.href = '/';
-            });
+            // socket.on('disconnected', function(msg) {
+            //     alert(msg);
+            //     document.location.href = '/';
+            // });
 
             socket.on('join', function(room) {
                 console.log(room);
