@@ -14,6 +14,12 @@ Both paired players can move to the next question only when they choose the same
 
 https://afternoon-springs-44315.herokuapp.com/
 
+## NOTE
+
+- **Some of the features are not working properly on heroku beacuse of SSL certificate. So it is advised to run locally.**
+- **Cascading**    - lower camel case
+- **Identitation** - whitespaces
+
 ## To run locally
 
 - npm install

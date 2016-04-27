@@ -104,9 +104,16 @@
                 room = room.slice(0,-1);
                 val = val + 1;
                 room = room + val;
-                socket.emit('nextStage', room);
+                if(room == 'stage6') {
+                    alert('Congrats! You completed the game. Thanks for playing.');
+                    room = '/';
+                }
+                else {
+                    socket.emit('nextStage', room);
+                }
                 document.location.href = room;
             });
+
 
             socket.on('getNextStage', function(room) {
                 $('#main').attr("src", "static/images/" + room + '/main.jpg');
@@ -129,6 +136,8 @@
                 alert(msg);
                 document.location.href = '/';
             });
+
+
 
             // socket.on('disconnected', function(msg) {
             //     alert(msg);
