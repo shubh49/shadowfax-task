@@ -2,13 +2,8 @@
 <html>
     <head>
         <title>Socket.IO chat</title>
-        <style>
-            * { margin: 0; padding :0; box-sizing: border-box; }
-            body { font: 13px Helvetica, Arial; }
-            #messages { list-style-type :none; margin: 0; padding: 0; }
-            #messages li { padding: 5px 10px; }
-            #messages li:nth-child(odd) { background: #eee; }
-        </style>
+        <script src="static/jquery-1.11.1.js"></script>
+        <script src="static/socket.io-1.2.0.js"></script>
         <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
     </head>
     <body>
@@ -53,8 +48,8 @@
             <button id="submit" class="btn btn-success">Submit Answer</button>
         </div>
       </div>
-        <script src="static/socket.io-1.2.0.js"></script>
-        <script src="static/jquery-1.11.1.js"></script>
+
+
         <script>
         var room = window.location.href.split('/').pop();
         $(document).ready(function() {
@@ -85,7 +80,7 @@
                 socket.emit('create', room);
             }
 
-            socket.on('room_created', function(msg) {
+            socket.on('roomCreated', function(msg) {
                 alert(msg);
             });
 
@@ -93,7 +88,7 @@
                 alert(msg);
             });
 
-            socket.on('mismatch', function(msg) {
+            socket.on('misMatch', function(msg) {
                 alert(msg);
             });
 
@@ -117,11 +112,15 @@
                 console.log(room);
             });
 
-            socket.on('got_pair', function(msg) {
+            socket.on('gotPair', function(msg) {
                 alert(msg);
             });
 
-            socket.on('limit_reached', function(msg) {
+            socket.on('alreadyRegistered', function(msg) {
+                alert(msg);
+            });
+
+            socket.on('limitReached', function(msg) {
                 alert(msg);
                 document.location.href = '/';
             });

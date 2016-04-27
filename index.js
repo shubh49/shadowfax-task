@@ -4,6 +4,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var clients = [];
 var userResponse = {};
+var flag = false;
 // var clients = io.sockets.clients();
 
 app.use("/static", express.static(__dirname+'/static'));
@@ -21,24 +22,22 @@ io.on('connection', function(socket){
     socket.on('create', function(room) {
       //console.log(room);
       socket.join(room);
-      console.log(room);
+      // console.log(room);
       clients.push(socket.id);
-      console.log(clients);
+      // console.log(clients);
       var rom = io.sockets.adapter.rooms[room];
-      // console.log(io.sockets.adapter.rooms);
-      // console.log(rom);
       a = Object.keys(rom).length;
       if(a == 1) {
         msg = 'You are the first one here. So you would have to wait till you are paired with someone!'
-        socket.emit('room_created', msg);
+        socket.emit('roomCreated', msg);
       }
       if(a == 2) {
         msg = 'You have got a pair. Choose your option and proceed.';
-        socket.broadcast.to(clients[0]).emit('got_pair', msg);
+        socket.broadcast.to(clients[0]).emit('gotPair', msg);
       }
       if (a > 2) {
         msg = 'Sorry maximum limit reached. Comeback later!'
-        socket.emit('limit_reached', msg);
+        socket.emit('limitReached', msg);
         socket.leave(room);
       }
     });
@@ -52,13 +51,14 @@ io.on('connection', function(socket){
           }
         }
         userResponse[choiceNo] = socket.id;
+        // consol e.log(userResponse);
         if(Object.keys(userResponse).length == 1) {
           msg = 'Your choice is registered. Waiting for other user response';
           socket.emit('registered', msg);
         }
         else {
           msg = 'Choices did not match. Try Again.'
-          io.emit('mismatch', msg);
+          io.emit('misMatch', msg);
         }
       }
       else {
@@ -67,13 +67,21 @@ io.on('connection', function(socket){
           io.emit('match', msg);
           // console.log('success');
         }
+        else {
+          msg = 'This choice is already registered by you. Wait for other user.'
+          socket.emit('alreadyRegistered', msg);
+        }
       }
-      // userResponse[choiceNo] = socket.id;
-      // console.log(userResponse);
-      // console.log(userResponse.indexOf(choiceNo));
     });
 
     socket.on('nextStage', function(room) {
+        if (!flag) {
+          userResponse = {};
+          flag = true;
+        }
+        else {
+          flag = false;
+        }
         io.emit('getNextStage', room);
     })
 
