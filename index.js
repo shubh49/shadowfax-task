@@ -27,7 +27,9 @@ io.sockets.on('connection', function(socket){
         clients.push(socket.id);
         // console.log(clients);
         var rom = io.sockets.adapter.rooms[room];
+        console.log(rom);
         a = Object.keys(rom).length;
+        console.log(a);
         if(a == 1) {
             msg = 'You are the first one here. So you would have to wait till you are paired with someone!'
             socket.emit('roomCreated', msg);
